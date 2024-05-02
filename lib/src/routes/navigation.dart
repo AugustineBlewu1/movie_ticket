@@ -1,19 +1,39 @@
-// GoRouter configuration
-import 'package:go_router/go_router.dart';
-import 'package:movie_ticket/src/screens/home_screen.dart';
+import 'package:flutter/material.dart';
 
-final router = GoRouter(
-  initialLocation: '/',
-  routes: [
-    GoRoute(
-      name: 'home', // Optional, add name to your routes. Allows you navigate by name instead of path
-      path: '/',
-      builder: (context, state) => const MyHomePage(),
-    ),
-    // GoRoute(
-    //   name: 'page2',
-    //   path: '/page2',
-    //   builder: (context, state) => Page2Screen(),
-    // ),
-  ],
-);
+//navigation for the application
+
+extension Navigation on BuildContext {
+  pushReplacement({required String? screen, Object? arguments}) {
+    return Navigator.pushReplacementNamed(this, screen!, arguments: arguments);
+  }
+
+  push({required String? screen, Object? arguments}) {
+    return Navigator.pushNamed(this, screen!, arguments: arguments);
+  }
+
+  pop() {
+    return Navigator.of(this).pop();
+  }
+
+  pushRoot({String? screen, Object? arguments}) {
+    return Navigator.of(this, rootNavigator: true).pushNamedAndRemoveUntil(
+        screen!, ModalRoute.withName('/'),
+        arguments: arguments);
+  }
+
+  pushRootwithContext({Widget? screen, Object? arguments}) {
+    return Navigator.of(this, rootNavigator: true).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (builder) => screen!),
+        ModalRoute.withName('/'));
+  }
+
+  pushwithContext(Widget? screen) {
+    return Navigator.push(
+        this, MaterialPageRoute(builder: (builder) => screen!));
+  }
+
+  mayBePOP() {
+    return Navigator.maybePop(
+        this,);
+  }
+}

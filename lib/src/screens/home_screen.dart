@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_ticket/src/contants/constant.dart';
 import 'package:movie_ticket/src/contants/extensions.dart';
+import 'package:movie_ticket/src/routes/navigation.dart';
+import 'package:movie_ticket/src/screens/movie_details.dart';
+import 'package:movie_ticket/src/widgets/movie_card.dart';
 
 class MyHomePage extends HookWidget {
   const MyHomePage({super.key});
@@ -12,6 +13,7 @@ class MyHomePage extends HookWidget {
   Widget build(BuildContext context) {
     final searchController = useTextEditingController(text: "");
     final selectedChip = useState<String>("action");
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 3, 4, 17),
@@ -143,29 +145,35 @@ class MyHomePage extends HookWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      const SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
+                       SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            MovieCard(
+                            const MovieCard(
                               assetsName: "assets/monkey.jpg",
                               movieName: "Thor: Love and Thunder",
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
-                            MovieCard(
+                            const MovieCard(
                               assetsName: "assets/sky_movie.png",
                               movieName: "Sky Movie",
+
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             MovieCard(
                               assetsName: "assets/spiderman.png",
                               movieName: "Spider Man",
+                               callback: () {
+                                context.pushwithContext(
+                                const MovieDetails('assets/spiderman.png', "Spider Man" )
+                                );
+                              },
                             )
                           ],
                         ),
@@ -192,8 +200,8 @@ class MyHomePage extends HookWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      const SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
+                      SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -201,18 +209,23 @@ class MyHomePage extends HookWidget {
                             MovieCard(
                               assetsName: "assets/monkey.jpg",
                               movieName: "Thor: Love and Thunder",
+                              callback: () {
+                                context.pushwithContext(
+                                const MovieDetails( 'assets/monkey.jpg', "Thor: Love and Thunder")
+                                );
+                              },
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
-                            MovieCard(
+                            const MovieCard(
                               assetsName: "assets/sky_movie.png",
                               movieName: "Sky Movie",
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
-                            MovieCard(
+                            const MovieCard(
                               assetsName: "assets/spiderman.png",
                               movieName: "Spider Man",
                             )
@@ -227,40 +240,6 @@ class MyHomePage extends HookWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class MovieCard extends StatelessWidget {
-  const MovieCard(
-      {super.key, required this.assetsName, required this.movieName});
-
-  final String? assetsName;
-  final String? movieName;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(15),
-          child: Container(
-            height: 180,
-            width: 135,
-            decoration: const BoxDecoration(
-              shape: BoxShape.rectangle,
-            ),
-            child: Image(fit: BoxFit.cover, image: AssetImage(assetsName!)),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Text(
-          movieName!,
-          style: Theme.of(context).textTheme.labelSmall,
-        )
-      ],
     );
   }
 }

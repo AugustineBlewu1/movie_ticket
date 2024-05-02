@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:movie_ticket/src/routes/navigation.dart';
+import 'package:movie_ticket/src/screens/bottom_nav_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp(),));
@@ -13,8 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: router,
+    return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -24,8 +24,11 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.nunitoTextTheme(
           Typography.whiteRedmond
         ),
+         
         useMaterial3: true,
+  
       ),
+        home: const MovieBottomNavBar(),
     );
   }
 }
